@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Weather App</title>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script>
+    $(document).ready(function(){
+      var lat;
+      var long;
+      if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+      lat = position.coords.latitude;
+      long = position.coords.longitude;
+      //$(".lat").text(lat);
+      //$(".long").text(long);
+        });
+      }      console.log(position.coords.latitude);
+    });
+  </script>
+  <style>
+  </style>
+</head>
+<body>
+
+</body>
+</html>
