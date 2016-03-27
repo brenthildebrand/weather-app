@@ -5,22 +5,123 @@
   <script src="https://code.jquery.com/jquery-latest.js"></script>
   <script>
     $(document).ready(function(){
-      var lat;
-      var long;
-      if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-      lat = position.coords.latitude;
-      long = position.coords.longitude;
-      //$(".lat").text(lat);
-      //$(".long").text(long);
-        });
-      }      console.log(lat);
+      var dateTime = new Date();
+      console.log(dateTime);
+
+      var api ={};
+
+      api.key = "";
+      api.state = prompt("What state do you live in?");
+      api.city = prompt("What city do you live in?");
+
+      api.conditions = "http://cooper-union-weather-proxy.herokuapp.com/weather/" + api.state + "/" + api.city;
+
+      console.log(api)
+
+      $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: api.conditions,
+        success: function(response){
+          console.log(response);
+
+          $(".location").append(response.current_observation.display_location.city + ", " + response.current_observation.display_location.state_name);
+
+          var temp = response.current_observation.feelslike_f;
+          console.log(temp);
+
+          var percentage = (temp / 120)*100;
+          var equalizer = 100 - percentage;
+          var input = equalizer + "%";
+
+          $(".empty").css("height", input);
+          $(".empty").css("border-radius", "15px 15px 0 0");
+        }
+      })
+
     });
   </script>
   <style>
+    body{
+      background-color: orange;
+    }
+    .temp_container{
+      background-color: white;
+      height: 75vh;
+      width: 200px;
+      position: fixed;
+      top: 12.5vh;
+      left:50%;
+      margin-left:-100px;
+      border-radius: 5px;
+      box-shadow:2px -2px 5px  #e6e6e6 inset;
+      border: 1px solid black;
+
+      }
+    .empty{
+      background-color: #b3ffff;
+      width:30px;
+      border-radius: 15px 15px;
+      height:100%;
+      margin-left: 0;
+      bottom:0;
+      -webkit-transition: height 2s, border-radius 2s;
+      box-shadow:4px 4px 5px  #4dffff inset;
+    }
+    .mercury{
+      position: fixed;
+      background-color: red;
+      width:30px;
+      border-radius: 15px;
+      height:56vh;
+      margin-left: 85px;
+      bottom:22vh;
+      margin-bottom: auto;
+      box-shadow:4px -2px 5px  maroon inset;
+      border: 1px solid black;
+
+    }
+    .circle{
+      display: none;
+      position:fixed;
+      background-color: red;
+      width: 40px;
+      height: 40px;
+      bottom: 19vh;
+      margin-left: 80px;
+      border-radius: 20px;
+
+    }
+    .location{
+      position: fixed;
+      width: 75vh;
+      color: white;
+      font-family: helvetica;
+      font-size: 30px;
+      top: 87.5vh;
+      left:50%;
+      transform-origin:0% 0%;
+      margin-left: -138px;
+      -ms-transform: rotate(-90deg); /* IE 9 */
+      -webkit-transform: rotate(-90deg); /* Safari */
+      transform: rotate(-90deg)
+    }
+    .zero{
+      position: fixed;
+      color: black;
+      font-family: helvetica;
+      font-size: 15px;
+      margin-left: 44px;
+      bottom: 22vh;
+      text-align: right;
+      line-height:.78vh;
+    }
   </style>
 </head>
 <body>
-
+  <div class="temp_container"><div class="mercury"><div class="empty"></div></div><div class="circle"></div><div class="zero">
+      120 -<br>-<br>-<br>-<br>-<br>-<br>110 -<br>-<br>-<br>-<br>-<br>-<br>100 -<br>-<br>-<br>-<br>-<br>-<br>90 -<br>-<br>-<br>-<br>-<br>-<br>80 -<br>-<br>-<br>-<br>-<br>-<br>70 -<br>-<br>-<br>-<br>-<br>-<br>60 -<br>-<br>-<br>-<br>-<br>-<br>50 -<br>-<br>-<br>-<br>-<br>-<br>40 -<br>-<br>-<br>-<br>-<br>-<br>30 -<br>-<br>-<br>-<br>-<br>-<br>20 -<br>-<br>-<br>-<br>-<br>-<br>10 -<br>-<br>-<br>-<br>-<br>-<br>0 -
+    </div></div>
+  <div class="location"></div>
 </body>
 </html>
