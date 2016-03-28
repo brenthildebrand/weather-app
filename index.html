@@ -33,9 +33,14 @@
           var percentage = (temp / 120)*100;
           var equalizer = 100 - percentage;
           var input = equalizer + "%";
+          var icon = response.current_observation.icon_url;
+          var iconImg = "<img src='" + icon + "'>"
+
+          console.log(icon);
 
           $(".empty").css("height", input);
           $(".empty").css("border-radius", "15px 15px 0 0");
+          $(".icon").html(iconImg);
         }
       })
 
@@ -117,14 +122,22 @@
       bottom: 22vh;
       text-align: right;
       line-height:.78vh;
-
+    }
+    .icon{
+      position:fixed;
+      width: 20px;
+      height: 20px;
+      margin-top: -30px;
+      top:50%;
+      left:50%;
+      margin-left: 30px;
     }
   </style>
 </head>
 <body>
   <div class="temp_container"><div class="mercury"><div class="empty"></div></div><div class="circle"></div><div class="zero">
       120 -<br>-<br>-<br>-<br>-<br>-<br>110 -<br>-<br>-<br>-<br>-<br>-<br>100 -<br>-<br>-<br>-<br>-<br>-<br>90 -<br>-<br>-<br>-<br>-<br>-<br>80 -<br>-<br>-<br>-<br>-<br>-<br>70 -<br>-<br>-<br>-<br>-<br>-<br>60 -<br>-<br>-<br>-<br>-<br>-<br>50 -<br>-<br>-<br>-<br>-<br>-<br>40 -<br>-<br>-<br>-<br>-<br>-<br>30 -<br>-<br>-<br>-<br>-<br>-<br>20 -<br>-<br>-<br>-<br>-<br>-<br>10 -<br>-<br>-<br>-<br>-<br>-<br>0 -
-    </div></div>
+    </div><div class="icon"></div></div>
   <div class="location"></div>
 </body>
 </html>
